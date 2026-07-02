@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<!--
+╔══════════════════════════════════════════════╗
+║   حفل تخرج الدكتورة يارا — موقع الدعوة     ║
+║   CHECKLIST BEFORE GOING LIVE               ║
+╠══════════════════════════════════════════════╣
+║  [ ] hero.jpg         — صورة يارا الرئيسية  ║
+║  [ ] gallery1.jpg     — صورة المعرض 1       ║
+║  [ ] gallery2.jpg     — صورة المعرض 2       ║
+║  [ ] gallery3.jpg     — صورة المعرض 3       ║
+║  [ ] gallery4.jpg     — صورة المعرض 4       ║
+║  [ ] gallery5.jpg     — صورة المعرض 5       ║
+║  [ ] gallery6.jpg     — صورة المعرض 6       ║
+║  [ ] venue.jpg        — صورة الفندق         ║
+║  [ ] Firebase config  — paste real values   ║
+║  [ ] Google Maps URL  — replace '#maps'     ║
+║  [ ] Admin PIN        — currently 7777      ║
+╚══════════════════════════════════════════════╝
+-->
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>حفل تخرج الدكتورة يارا</title>
+
+<style>
+/* ═══════════════════════════════════════════════
+   الخطوط — GOOGLE FONTS
+   ═══════════════════════════════════════════════ */
+@import url('https://fonts.googleapis.com/css2?family=Scheherazade+New:wght@400;700&family=Noto+Naskh+Arabic:wght@400;600&family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Cormorant+Garamond:ital,wght@1,300;1,400;1,600&family=Great+Vibes&family=Montserrat:wght@200;300;400&display=swap');
+
+/* ═══════════════════════════════════════════════
+   لوحة الألوان الفاخرة — LUXURY PALETTE
+   ═══════════════════════════════════════════════ */
+:root{
+  --noir:       #0A0A0A;
+  --noir-soft:  #141414;
+  --charcoal:   #1E1C1A;
+  --gold:       #C9A84C;
+  --gold-lt:    #E2C97E;
+  --gold-dk:    #9A7A2E;
+  --cream:      #F5EFE0;
+  --ivory:      #FAF7F1;
+  --warm-grey:  #2A2825;
+  --ink:        #1A1714;
+  --ink-soft:   #5C5449;
+  --blush-gold: rgba(201,168,76,0.08);
+}
+
+/* ═══════════════════════════════════════════════
+   RESET & BASE
+   ═══════════════════════════════════════════════ */
+*{ margin:0; padding:0; box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+body{
+  background:var(--noir);
+  color:var(--cream);
+  overflow-x:hidden;
+  font-family:"Scheherazade New", serif;
+  -webkit-font-smoothing:antialiased;
+  width:100%;
+  position:relative;
+}
+img{ display:block; max-width:100%; }
+a{ text-decoration:none; color:inherit; }
+button{ font-family:inherit; cursor:pointer; border:none; background:none; }
+
+/* ═══════════════════════════════════════════════
+   شريط التقدم الذهبي — SCROLL PROGRESS BAR
+   ═══════════════════════════════════════════════ */
+#progressBar{
+  position:fixed; top:0; right:0; height:3px; width:0%;
+  background:linear-gradient(to right, var(--gold-dk), var(--gold-lt), var(--gold));
+  z-index:9999;
+}
+
+/* ═══════════════════════════════════════════════
+   كشف الأقسام — SECTION REVEAL
+   ═══════════════════════════════════════════════ */
+.reveal{ opacity:0; transform:translateY(50px); transition:opacity .9s ease, transform .9s ease; }
+.reveal.visible{ opacity:1; transform:translateY(0); }
+
+/* ═══════════════════════════════════════════════
+   SECTION 1 — HERO (English, LTR)
+   ═══════════════════════════════════════════════ */
+.hero{
+  height:100vh; min-height:600px;
+  background:var(--noir);
+  position:relative; overflow:hidden;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  direction:ltr;
+}
+
+/* الجزيئات الطبية — MEDICAL PARTICLES */
+.particles{ position:absolute; inset:0; overflow:hidden; pointer-events:none; z-index:1; }
+.particle{
+  position:absolute; bottom:-30px;
+  color:var(--gold);
+  animation:rise linear infinite;
+  will-change:transform, opacity;
+}
+@keyframes rise{
+  0%{ transform:translateY(0) translateX(0); opacity:0; }
+  10%{ opacity:var(--p-op); }
+  90%{ opacity:var(--p-op); }
+  100%{ transform:translateY(-110vh) translateX(var(--p-drift)); opacity:0; }
+}
+
+/* إطار القوس — ARCH FRAME */
+.arch-wrap{
+  position:relative; z-index:2;
+  width:min(320px, 82vw);
+  display:flex; justify-content:center;
+}
+.arch{
+  position:relative;
+  width:min(320px, 82vw);
+  height:min(480px, 110vw);
+  border-radius:50% 50% 0 0 / 60% 60% 0 0;
+  overflow:hidden;
+  border:1px solid var(--gold);
+  box-shadow:0 0 30px rgba(201,168,76,0.3);
+  opacity:0; transform:scale(1.08);
+  animation:archIn 1.4s ease-out forwards;
+}
+@keyframes archIn{ to{ opacity:1; transform:scale(1); } }
+.arch img{ width:100%; height:100%; object-fit:cover; object-position:center top; }
+.arch-placeholder{
+  width:100%; height:100%;
+  background:var(--charcoal);
+  display:flex; align-items:center; justify-content:center;
+  color:var(--gold); font-family:"Noto Naskh Arabic"; font-size:15px;
+  letter-spacing:.1em; direction:rtl;
+}
+
+/* الخطوط الذهبية العمودية — GOLD VERTICAL LINES */
+.gold-lines{
+  position:absolute; left:-24px; top:20%;
+  height:60%; display:flex; gap:5px; z-index:3;
+}
+.gold-lines span{
+  width:1px; background:var(--gold);
+  height:0; align-self:flex-start;
+  animation:lineGrow 1s ease-out forwards;
+}
+.gold-lines span:nth-child(1){ animation-delay:.2s; }
+.gold-lines span:nth-child(2){ animation-delay:.4s; }
+.gold-lines span:nth-child(3){ animation-delay:.6s; }
+.gold-lines span:nth-child(4){ animation-delay:.8s; }
+@keyframes lineGrow{ to{ height:100%; } }
+
+/* النص العمودي — VERTICAL SIDE TEXT */
+.vertical-text{
+  position:absolute; right:-30px; top:50%;
+  transform:translateY(-50%) rotate(180deg);
+  writing-mode:vertical-rl;
+  font-family:"Montserrat", sans-serif; font-weight:200;
+  font-size:11px; letter-spacing:.3em;
+  color:var(--cream); opacity:0; z-index:3;
+  white-space:nowrap;
+  animation:fadeIn 1s ease forwards; animation-delay:1.6s;
+}
+@keyframes fadeIn{ to{ opacity:.7; } }
+
+/* نص البطل — HERO TEXT */
+.hero-text{
+  position:relative; z-index:4; text-align:center;
+  margin-top:-90px; padding:0 20px;
+  width:100%;
+}
+.hero-text::before{
+  content:""; position:absolute; left:0; right:0; top:-120px; bottom:-40px;
+  background:linear-gradient(to bottom, transparent 0%, var(--noir) 70%);
+  z-index:-1; pointer-events:none;
+}
+.hero-name{
+  font-family:"Cormorant Garamond", serif; font-style:italic; font-weight:600;
+  font-size:clamp(52px, 13vw, 96px); line-height:1;
+  background:linear-gradient(135deg, var(--gold-lt), var(--ivory));
+  -webkit-background-clip:text; background-clip:text;
+  -webkit-text-fill-color:transparent; color:transparent;
+  display:inline-block;
+}
+.hero-name .ltr-letter{
+  display:inline-block; opacity:0; transform:translateY(20px);
+  animation:letterIn .6s ease forwards;
+}
+.hero-sub{
+  font-family:"Great Vibes", cursive;
+  font-size:clamp(28px, 7vw, 52px);
+  color:var(--gold); margin-top:6px;
+  opacity:0; animation:fadeUp .6s ease forwards; animation-delay:1.8s;
+}
+.hero-tag{
+  font-family:"Cormorant Garamond", serif; font-style:italic; font-weight:300;
+  font-size:18px; color:var(--cream); opacity:0; margin-top:4px;
+  animation:fadeTag .6s ease forwards; animation-delay:2.1s;
+}
+@keyframes letterIn{ to{ opacity:1; transform:translateY(0); } }
+@keyframes fadeUp{ from{transform:translateY(12px);} to{ opacity:1; transform:translateY(0);} }
+@keyframes fadeTag{ to{ opacity:.6; } }
+
+/* مؤشر التمرير — SCROLL CUE */
+.scroll-cue{
+  position:absolute; bottom:32px; left:50%; transform:translateX(-50%);
+  z-index:5; text-align:center; direction:rtl;
+  opacity:0; animation:fadeTag .8s ease forwards; animation-delay:2.4s;
+}
+.scroll-cue span{
+  font-family:"Noto Naskh Arabic"; font-size:12px; color:var(--cream); opacity:.6;
+  display:block; margin-bottom:6px;
+}
+.scroll-cue .chev{
+  width:18px; height:18px; margin:0 auto;
+  border-right:1.5px solid var(--gold); border-bottom:1.5px solid var(--gold);
+  transform:rotate(45deg); animation:bounce 1.8s infinite;
+}
+@keyframes bounce{ 0%,100%{ transform:rotate(45deg) translate(0,0);} 50%{ transform:rotate(45deg) translate(4px,4px);} }
+
+/* ═══════════════════════════════════════════════
+   عام — SECTION LAYOUT
+   ═══════════════════════════════════════════════ */
+section{ padding:70px 20px; position:relative; }
+@media(min-width:768px){ section:not(.hero){ padding:100px 64px; } }
+
+.section-heading{
+  font-family:"Amiri", serif; font-weight:700;
+  text-align:center; line-height:1.3;
+}
+.gold-shimmer{
+  background:linear-gradient(90deg, var(--gold-dk), var(--gold-lt), var(--gold), var(--gold-lt), var(--gold-dk));
+  background-size:200% auto;
+  -webkit-background-clip:text; background-clip:text;
+  -webkit-text-fill-color:transparent; color:transparent;
+  animation:shimmer 4s linear infinite;
+}
+@keyframes shimmer{ to{ background-position:200% center; } }
+
+.gold-underline{
+  width:60px; height:1px; background:var(--gold); margin:18px auto 32px;
+}
+
+/* فاصل ذهبي بزخرفة — ORNAMENT DIVIDER */
+.ornament-line{
+  display:flex; align-items:center; justify-content:center; gap:16px;
+  max-width:680px; margin:0 auto;
+}
+.ornament-line .ln{ flex:1; height:1px; background:var(--gold); opacity:.3; }
+.ornament-line svg{ flex-shrink:0; }
+
+/* ═══════════════════════════════════════════════
+   SECTION 2 — الرسالة (Arabic letter)
+   ═══════════════════════════════════════════════ */
+.letter{ background:var(--noir-soft); }
+.praise{ text-align:center; margin:48px auto 40px; max-width:680px; }
+.praise p{
+  font-family:"Amiri", serif; font-style:italic; font-weight:700;
+  font-size:clamp(20px,5vw,30px); color:var(--gold); line-height:2.4;
+  opacity:0; transform:translateY(20px); transition:.8s ease;
+}
+.praise p.visible{ opacity:1; transform:translateY(0); }
+
+.letter-body{ max-width:680px; margin:0 auto; padding:0 4px; }
+.letter-body p{
+  font-family:"Scheherazade New", serif; font-weight:400;
+  font-size:clamp(17px,4vw,22px); color:var(--cream);
+  line-height:2.4; text-align:right; margin-bottom:24px;
+  opacity:.9;
+}
+.letter-line{
+  opacity:0; transform:translateY(30px); transition:.8s ease;
+}
+.letter-line.visible{ opacity:.9; transform:translateY(0); }
+
+.daughter-line{
+  font-family:"Amiri", serif !important; font-weight:700; font-style:italic;
+  color:var(--gold) !important; opacity:1 !important;
+  font-size:clamp(22px,5.2vw,29px) !important;
+  text-align:center !important;
+}
+.daughter-line.visible{ opacity:1 !important; }
+
+/* كتلة الدعوة — INVITATION BLOCK */
+.invite-block{ max-width:680px; margin:48px auto 0; text-align:center; }
+.invite-open{
+  font-family:"Amiri", serif; font-style:italic; font-weight:700;
+  font-size:clamp(22px,5.5vw,32px); color:var(--gold); line-height:2;
+  margin-bottom:32px;
+}
+.invite-intro{
+  font-family:"Scheherazade New", serif; font-size:clamp(18px,4.4vw,22px);
+  color:var(--cream); line-height:2.2; opacity:.9;
+}
+.invite-name{
+  font-family:"Amiri", serif; font-weight:700;
+  font-size:clamp(28px,7vw,42px); line-height:1.6;
+  background:linear-gradient(135deg, var(--gold-lt), var(--gold));
+  -webkit-background-clip:text; background-clip:text;
+  -webkit-text-fill-color:transparent; color:transparent;
+  margin:14px 0; letter-spacing:.02em;
+}
+.invite-degree{
+  font-family:"Scheherazade New", serif; font-size:clamp(16px,4vw,20px);
+  color:var(--cream); opacity:.85; line-height:2;
+}
+.invite-when{
+  font-family:"Scheherazade New", serif; font-weight:700;
+  font-size:20px; color:var(--cream); line-height:2.2;
+  margin:32px 0;
+}
+.invite-close{
+  font-family:"Scheherazade New", serif; font-style:italic;
+  font-size:clamp(16px,4vw,19px); color:var(--cream); opacity:.8; line-height:2.2;
+}
+.signature{
+  font-family:"Amiri", serif; font-weight:700;
+  font-size:clamp(24px,6vw,32px); color:var(--gold);
+  margin-top:24px;
+}
+.notes{ margin-top:40px; text-align:center; }
+.notes p{
+  font-family:"Noto Naskh Arabic"; font-weight:400;
+  font-size:14px; color:var(--cream); opacity:.5; line-height:2;
+}
+
+/* ═══════════════════════════════════════════════
+   SECTION 3 — المكان (Venue)
+   ═══════════════════════════════════════════════ */
+.venue{ background:var(--ivory); color:var(--ink); }
+.venue .section-heading{ color:var(--ink); font-size:clamp(36px,9vw,56px); }
+
+.venue-card{
+  background:#fff; border:1px solid rgba(201,168,76,0.3);
+  border-radius:4px; box-shadow:0 20px 60px rgba(0,0,0,0.08);
+  padding:28px 20px; max-width:560px; margin:0 auto; text-align:center;
+}
+@media(min-width:768px){ .venue-card{ padding:40px 32px; } }
+.venue-card .pin{ margin:0 auto 14px; }
+.venue-hall{ font-family:"Amiri", serif; font-weight:700; font-size:28px; color:var(--ink); }
+.venue-hotel{ font-family:"Scheherazade New", serif; font-size:18px; color:var(--ink-soft); margin-top:6px; }
+.venue-divider{ height:1px; background:rgba(201,168,76,0.3); margin:24px 0; }
+
+.venue-info{ display:flex; justify-content:space-around; gap:10px; margin-bottom:24px; }
+.venue-info .col{ flex:1; }
+.venue-info svg{ margin:0 auto 8px; }
+.venue-info .val{ font-family:"Noto Naskh Arabic"; font-weight:600; font-size:15px; color:var(--ink); }
+.venue-info .lbl{ font-family:"Noto Naskh Arabic"; font-size:12px; color:var(--ink-soft); margin-top:2px; }
+
+.venue-photo{
+  width:100%; height:220px; border-radius:8px; overflow:hidden;
+  position:relative; margin-bottom:20px; background:var(--charcoal);
+}
+.venue-photo img{ width:100%; height:100%; object-fit:cover; }
+.venue-photo::after{
+  content:""; position:absolute; inset:0; background:rgba(201,168,76,0.06);
+}
+.venue-photo .ph{
+  width:100%; height:100%; display:flex; align-items:center; justify-content:center;
+  color:var(--gold); font-family:"Amiri", serif; font-size:20px;
+}
+
+.map-btn{
+  display:block; width:100%; padding:16px; border-radius:50px;
+  background:var(--gold); color:var(--noir);
+  font-family:"Amiri", serif; font-weight:700; font-size:16px; letter-spacing:.05em;
+  position:relative; overflow:hidden; transition:.3s ease;
+}
+.map-btn:hover{ background:var(--gold-lt); transform:translateY(-2px); }
+
+/* ═══════════════════════════════════════════════
+   SECTION 4 — المعرض (Gallery)
+   ═══════════════════════════════════════════════ */
+.gallery{ background:var(--charcoal); }
+.gallery .section-heading{ font-style:italic; font-size:clamp(32px,8vw,52px); }
+.gallery-sub{
+  font-family:"Scheherazade New", serif; font-style:italic;
+  font-size:16px; color:var(--cream); opacity:.6; text-align:center; margin-top:8px;
+}
+.swipe-hint{
+  font-family:"Noto Naskh Arabic"; font-size:12px; letter-spacing:.1em;
+  color:var(--gold); opacity:.5; text-align:center; margin-top:18px;
+}
+@media(min-width:768px){ .swipe-hint{ display:none; } }
+.gallery-grid{
+  display:flex; gap:14px;
+  overflow-x:auto; overflow-y:hidden;
+  scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+  padding:40px 20px 16px;
+  margin:0 -20px;
+}
+.gallery-grid::-webkit-scrollbar{ display:none; }
+@media(min-width:768px){ .gallery-grid{ justify-content:center; flex-wrap:wrap; margin:40px auto 0; padding:0; max-width:900px; } }
+.gallery-item{
+  flex:0 0 72%; max-width:300px;
+  scroll-snap-align:center;
+  position:relative; aspect-ratio:3/4; border-radius:8px; overflow:hidden;
+  border:1px solid rgba(201,168,76,0.2); background:var(--noir-soft);
+  opacity:0; transform:scale(.92); transition:opacity .6s ease, transform .6s ease;
+}
+@media(min-width:768px){ .gallery-item{ flex:0 0 calc(33.333% - 10px); } }
+.gallery-item.visible{ opacity:1; transform:scale(1); animation:photoBounce .6s ease; }
+@keyframes photoBounce{ 0%{transform:scale(.88);} 60%{transform:scale(1.02);} 100%{transform:scale(1);} }
+.gallery-item img{ width:100%; height:100%; object-fit:cover; }
+.gallery-item .ph{
+  width:100%; height:100%; display:flex; align-items:center; justify-content:center;
+  color:var(--gold); font-size:34px; font-weight:300;
+}
+.gallery-item .overlay{
+  position:absolute; inset:0; opacity:0; transition:.3s ease;
+  background:linear-gradient(to top, rgba(10,10,10,0.8), transparent);
+  display:flex; align-items:flex-end; padding:14px;
+}
+.gallery-item:hover .overlay{ opacity:1; }
+.gallery-item .overlay span{
+  font-family:"Noto Naskh Arabic"; font-size:13px; color:var(--gold);
+}
+
+/* ═══════════════════════════════════════════════
+   SECTION 5 — تأكيد الحضور (RSVP)
+   ═══════════════════════════════════════════════ */
+.rsvp{ background:var(--ivory); color:var(--ink); }
+.rsvp .section-heading{ color:var(--ink); font-size:clamp(32px,8vw,50px); }
+.rsvp-sub{
+  font-family:"Scheherazade New", serif; font-style:italic;
+  font-size:17px; color:var(--ink-soft); text-align:center; margin-top:10px;
+}
+.rsvp-card{
+  background:#fff; border:1px solid rgba(201,168,76,0.25);
+  border-radius:4px; box-shadow:0 24px 64px rgba(0,0,0,0.1);
+  padding:28px 20px; max-width:520px; margin:32px auto 0;
+}
+@media(min-width:768px){ .rsvp-card{ padding:44px 36px; } }
+
+.field{ margin-bottom:32px; }
+.field label{
+  display:block; font-family:"Noto Naskh Arabic"; font-size:12px;
+  letter-spacing:.15em; color:var(--ink-soft); margin-bottom:10px;
+}
+.field input, .field textarea{
+  width:100%; border:none; border-bottom:2px solid rgba(201,168,76,0.3);
+  background:transparent; font-family:"Scheherazade New", serif;
+  color:var(--ink); padding:12px 0; transition:border-color .3s ease;
+  outline:none; font-size:20px;
+}
+.field textarea{ font-size:18px; line-height:2; min-height:100px; resize:vertical; }
+.field input::placeholder, .field textarea::placeholder{ font-style:italic; color:#bbb; }
+.field input:focus, .field textarea:focus{ border-bottom-color:var(--gold); }
+.field input.error, .field textarea.error{ border-bottom-color:#c0392b; }
+
+.field-error{
+  font-family:"Noto Naskh Arabic"; font-size:13px; color:#c0392b;
+  margin-top:8px; display:none;
+}
+.field-error.show{ display:block; }
+
+/* أزرار التبديل — TOGGLE BUTTONS */
+.toggle-row{ display:flex; flex-direction:column; gap:12px; }
+@media(min-width:480px){ .toggle-row.guest-row{ flex-direction:row; } }
+.toggle-btn{
+  flex:1; border:1px solid rgba(201,168,76,0.3); background:transparent;
+  color:var(--ink-soft); border-radius:2px; padding:14px 20px;
+  font-family:"Scheherazade New", serif; font-size:17px; transition:.25s ease;
+}
+.toggle-btn.selected{ background:var(--noir); border-color:var(--gold); color:var(--cream); }
+.guest-field{ display:none; }
+.guest-field.show{ display:block; animation:fadeUp .4s ease; }
+.guest-row{ flex-direction:row; }
+.guest-row .toggle-btn{ flex:1; }
+
+/* SHAKE */
+.shake{ animation:shake .4s; }
+@keyframes shake{ 0%,100%{transform:translateX(0);} 20%,60%{transform:translateX(-6px);} 40%,80%{transform:translateX(6px);} }
+
+/* SUBMIT */
+.submit-btn{
+  width:100%; padding:18px; background:var(--noir); color:var(--cream);
+  border:1px solid var(--gold); border-radius:2px;
+  font-family:"Amiri", serif; font-weight:700; font-size:17px; letter-spacing:.08em;
+  position:relative; overflow:hidden; transition:.3s ease;
+}
+.submit-btn:hover{ background:var(--gold); color:var(--noir); }
+.submit-btn:active{ transform:scale(.98); }
+
+/* THANK YOU */
+.thankyou{ display:none; text-align:center; padding:10px 0; }
+.thankyou.show{ display:block; animation:fadeUp .6s ease; }
+.thankyou .symbol{
+  margin:0 auto 24px; transform:scale(0);
+  animation:bloom .8s cubic-bezier(.34,1.56,.64,1) forwards;
+}
+@keyframes bloom{ to{ transform:scale(1) rotate(360deg); } }
+.thankyou h3{ font-family:"Amiri", serif; font-weight:700; margin-bottom:14px; }
+.thankyou p{ font-family:"Scheherazade New", serif; line-height:2; margin-bottom:10px; }
+.ty-yes h3{ font-size:32px; color:var(--gold); }
+.ty-no h3{ font-size:28px; color:var(--ink); }
+.thankyou .ty-msg{ font-style:italic; font-size:18px; color:var(--ink-soft); }
+.thankyou .ty-detail{ font-size:16px; color:var(--gold); }
+.ghost-btn{
+  margin-top:24px; border:1px solid rgba(201,168,76,0.4); background:transparent;
+  padding:12px 28px; border-radius:2px;
+  font-family:"Scheherazade New", serif; font-style:italic; font-size:15px; color:var(--ink-soft);
+}
+
+/* RIPPLE */
+.ripple{
+  position:absolute; border-radius:50%; transform:scale(0);
+  background:rgba(255,255,255,0.4); animation:rippleA .6s linear; pointer-events:none;
+}
+@keyframes rippleA{ to{ transform:scale(4); opacity:0; } }
+
+/* GOLD SHIMMER SWEEP on submit */
+.sweep::after{
+  content:""; position:absolute; top:0; left:-100%; width:100%; height:100%;
+  background:linear-gradient(90deg, transparent, rgba(226,201,126,0.5), transparent);
+  animation:sweep .6s ease;
+}
+@keyframes sweep{ to{ left:100%; } }
+
+/* ═══════════════════════════════════════════════
+   لوحة التحكم — ADMIN PANEL
+   ═══════════════════════════════════════════════ */
+.admin-link{
+  display:block; text-align:center; margin:30px auto 16px;
+  font-family:"Noto Naskh Arabic"; font-weight:400; font-size:11px;
+  color:var(--gold); opacity:.3;
+}
+.admin-overlay{
+  position:fixed; inset:0; background:var(--noir); z-index:10000;
+  display:none; overflow-y:auto; padding:40px 20px;
+}
+.admin-overlay.show{ display:block; }
+.admin-overlay h2{
+  font-family:"Amiri", serif; color:var(--gold); text-align:center;
+  font-size:32px; margin-bottom:24px;
+}
+.admin-stats{
+  display:flex; flex-wrap:wrap; gap:12px; justify-content:center;
+  max-width:600px; margin:0 auto 30px;
+}
+.stat-box{
+  flex:1; min-width:130px; background:var(--charcoal); border:1px solid rgba(201,168,76,0.2);
+  border-radius:4px; padding:18px; text-align:center;
+}
+.stat-box .num{ font-family:"Amiri", serif; font-weight:700; font-size:30px; color:var(--gold); }
+.stat-box .lbl{ font-family:"Noto Naskh Arabic"; font-size:13px; color:var(--cream); opacity:.7; margin-top:4px; }
+
+.resp-list{ max-width:600px; margin:0 auto; }
+.resp-card{
+  background:var(--charcoal); border:1px solid rgba(201,168,76,0.15);
+  border-radius:4px; padding:18px; margin-bottom:12px;
+}
+.resp-card .head{ display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
+.resp-card .nm{ font-family:"Scheherazade New", serif; font-size:20px; color:var(--cream); }
+.pill{
+  font-family:"Noto Naskh Arabic"; font-size:12px; padding:4px 12px; border-radius:50px;
+}
+.pill.yes{ background:var(--gold); color:var(--noir); }
+.pill.no{ background:var(--warm-grey); color:var(--cream); }
+.resp-card .meta{ font-family:"Noto Naskh Arabic"; font-size:13px; color:var(--cream); opacity:.6; line-height:1.8; }
+.resp-card .msg{ font-family:"Scheherazade New", serif; font-size:16px; color:var(--gold); opacity:.85; margin-top:6px; }
+.admin-back{
+  display:block; margin:24px auto 0; background:var(--gold); color:var(--noir);
+  padding:12px 32px; border-radius:50px; font-family:"Amiri", serif; font-weight:700;
+}
+.admin-empty{ text-align:center; font-family:"Noto Naskh Arabic"; color:var(--cream); opacity:.5; padding:40px; }
+</style>
+</head>
+<body>
+
+<!-- شريط التقدم — PROGRESS BAR -->
+<div id="progressBar"></div>
+
+<!-- ════════════════ SECTION 1 — HERO ════════════════ -->
+<section class="hero">
+  <!-- الجزيئات الطبية -->
+  <div class="particles" id="particles"></div>
+
+  <div class="arch-wrap">
+    <!-- الخطوط الذهبية -->
+    <div class="gold-lines"><span></span><span></span><span></span><span></span></div>
+    <!-- النص العمودي -->
+    <div class="vertical-text">Dr. Yara · Class of 2026 · Al-Biruni Medical University</div>
+    <!-- القوس -->
+    <div class="arch">
+      <img src="hero.jpg" alt="Dr. Yara" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="arch-placeholder" style="display:none;">الصورة قريباً</div>
+    </div>
+  </div>
+
+  <!-- نص البطل -->
+  <div class="hero-text">
+    <div class="hero-name" id="heroName"></div>
+    <div class="hero-sub">Class of 2026</div>
+    <div class="hero-tag">graduate</div>
+  </div>
+
+  <!-- مؤشر التمرير -->
+  <div class="scroll-cue">
+    <span>اكتشف المزيد</span>
+    <div class="chev"></div>
+  </div>
+</section>
+
+<!-- ════════════════ SECTION 2 — الرسالة ════════════════ -->
+<section class="letter reveal">
+  <!-- زخرفة علوية -->
+  <div class="ornament-line">
+    <div class="ln"></div>
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1"><path d="M12 2l2.5 6.5L21 11l-6.5 2.5L12 20l-2.5-6.5L3 11l6.5-2.5z"/></svg>
+    <div class="ln"></div>
+  </div>
+
+  <!-- كتلة الحمد -->
+  <div class="praise">
+    <p>بسم الله ماشاء الله</p>
+    <p>والحمد لله الذي بنعمته تتم الصالحات</p>
+    <p>والحمد لله حتى يرضى</p>
+  </div>
+
+  <!-- رسالة الأم -->
+  <div class="letter-body">
+    <p class="letter-line">ابنتي الحبيبة يارا... كل الكلام لا يكفي عن حبي ورضاي وافتخاري بك
+      تمم الله بالرضا عليك غاليتي وعلى إخوانك معك عن كل البر والحب الذي تغمرونني به
+      والحمد لك يا قدير... وقفت معنا وقت الزرع وتبارك لنا اليوم ساعة الحصاد... 
+      </p>
+  </div>
+
+  <!-- كتلة الدعوة -->
+  <div class="invite-block">
+    <div class="ornament-line" style="margin-bottom:32px;">
+      <div class="ln"></div>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1"><circle cx="12" cy="12" r="4"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg>
+      <div class="ln"></div>
+    </div>
+    <p class="invite-open"> الأهل والأحبة جميعاً</p>
+    <p class="invite-intro">أدعوكم لمشاركتي فرحتي بحضور حفل عشاء تخرج ابنتي</p>
+    <p class="invite-name">الدكتورة:يارا</p>
+    <p class="invite-degree">بشهادة الامتياز من كلية الطب- جامعة البيروني- اسطنبول </p>
+
+    <p class="invite-when">
+      والذي سيكون بإذن الله من الساعة 7:00 إلى الساعة 9:00 من مساء <br>
+      يوم الخميس الموافق 16 / 07 / 2026<br>
+      الساعة السابعة مساءً<br>
+      قاعة ربابة — فندق الشيراتون، عمّان
+    </p>
+
+    <p class="signature">د. ديمة العزة</p>
+
+    <div class="notes">
+      <p> ملاحظة: الدعوات مخصصة<br> ولذلك يرجى احضار بطاقة الدعوة وابرازها للحارس عند الدخول</p>
+    </div>
+  </div>
+
+  <!-- زخرفة سفلية -->
+  <div class="ornament-line" style="margin-top:48px;">
+    <div class="ln"></div>
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1"><path d="M12 2l2.5 6.5L21 11l-6.5 2.5L12 20l-2.5-6.5L3 11l6.5-2.5z"/></svg>
+    <div class="ln"></div>
+  </div>
+</section>
+
+<!-- ════════════════ SECTION 3 — المكان ════════════════ -->
+<section class="venue reveal">
+  <h2 class="section-heading">المكان</h2>
+  <div class="gold-underline"></div>
+
+  <div class="venue-card">
+    <!-- دبوس الموقع -->
+    <svg class="pin" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5"><path d="M12 21s-7-6.5-7-12a7 7 0 0114 0c0 5.5-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
+
+    <div class="venue-hall">قاعة ربابة</div>
+    <div class="venue-hotel">فندق الشيراتون — عمّان، الأردن</div>
+
+    <div class="venue-divider"></div>
+
+    <div class="venue-info">
+      <div class="col">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        <div class="val">7:00 مساءً</div>
+        <div class="lbl">الساعة</div>
+      </div>
+      <div class="col">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg>
+        <div class="val">16 يوليو 2026</div>
+        <div class="lbl">التاريخ</div>
+      </div>
+      <div class="col">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5"><path d="M6 3l6 4 6-4v18l-6-3-6 3z"/><path d="M12 7v11"/></svg>
+        <div class="val">مختلط</div>
+        <div class="lbl">الحفل</div>
+      </div>
+    </div>
+
+    <!-- صورة المكان -->
+    <div class="venue-photo">
+      <img src="venue.jpg" alt="فندق الشيراتون" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="ph" style="display:none;">فندق الشيراتون</div>
+    </div>
+
+    <!-- زر الخريطة -->
+    <a href="#maps" target="_blank" rel="noopener" class="map-btn rippleBtn">عرض على الخريطة ←</a>
+  </div>
+</section>
+
+<!-- ════════════════ SECTION 4 — المعرض ════════════════ -->
+<section class="gallery reveal">
+  <h2 class="section-heading gold-shimmer">يارا في رحلتها</h2>
+  <p class="swipe-hint">← اسحب لمشاهدة المزيد →</p>
+
+  <div class="gallery-grid" id="galleryGrid">
+    <!-- يتم إنشاء العناصر بواسطة JS -->
+  </div>
+</section>
+
+<!-- ════════════════ SECTION 5 — تأكيد الحضور ════════════════ -->
+<section class="rsvp reveal">
+  <h2 class="section-heading">تأكيد الحضور</h2>
+  <p class="rsvp-sub">يسعدنا تواجدكم في هذه المناسبة الغالية</p>
+  <div class="gold-underline"></div>
+
+  <div class="rsvp-card">
+    <!-- النموذج -->
+    <form id="rsvpForm" novalidate>
+      <!-- الاسم -->
+      <div class="field">
+        <label for="name">الاسم الكريم</label>
+        <input type="text" id="name" placeholder="اسمك الكريم..." autocomplete="name">
+        <div class="field-error" id="nameError">يُرجى إدخال اسمك الكريم</div>
+      </div>
+
+      <!-- الحضور -->
+      <div class="field">
+        <label>هل ستحضر؟</label>
+        <div class="toggle-row" id="attendRow">
+          <button type="button" class="toggle-btn" data-attend="yes">بكل سرور ✓</button>
+          <button type="button" class="toggle-btn" data-attend="no">أعتذر بأسف</button>
+        </div>
+        <div class="field-error" id="attendError">يُرجى اختيار تأكيد الحضور أو الاعتذار</div>
+      </div>
+
+      <!-- عدد الحضور -->
+      <div class="field guest-field" id="guestField">
+        <label>عدد الأشخاص المرافقين (بحد أقصى 3)</label>
+        <div class="toggle-row guest-row" id="guestRow">
+          <button type="button" class="toggle-btn" data-guest="1">1</button>
+          <button type="button" class="toggle-btn" data-guest="2">2</button>
+          <button type="button" class="toggle-btn" data-guest="3">3</button>
+        </div>
+      </div>
+
+      <!-- الرسالة -->
+      <div class="field">
+        <label for="message">رسالتك إلى الدكتورة يارا</label>
+        <textarea id="message" placeholder="اكتب تهنئتك أو رسالتك هنا..."></textarea>
+      </div>
+
+      <!-- إرسال -->
+      <button type="submit" class="submit-btn rippleBtn" id="submitBtn">إرسال الرد</button>
+    </form>
+
+    <!-- شاشة الشكر -->
+    <div class="thankyou" id="thankyou">
+      <svg class="symbol" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.2">
+        <path d="M12 2a8 8 0 106.9 12 6.5 6.5 0 11-6.9-9.5"/>
+        <path d="M19 3l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z" fill="#C9A84C"/>
+      </svg>
+      <div id="tyContent"></div>
+      <button type="button" class="ghost-btn" id="resetBtn">إرسال رد آخر</button>
+    </div>
+  </div>
+
+  <!-- رابط لوحة التحكم -->
+  <a class="admin-link" id="adminLink">لوحة التحكم</a>
+</section>
+
+<!-- ════════════════ لوحة التحكم — ADMIN ════════════════ -->
+<div class="admin-overlay" id="adminOverlay">
+  <h2>لوحة التحكم</h2>
+  <div class="admin-stats" id="adminStats"></div>
+  <div class="resp-list" id="respList"></div>
+  <button class="admin-back" id="adminBack">رجوع</button>
+</div>
+
+<!-- ════════════════ FIREBASE SDK ════════════════ -->
+<script src="https://www.gstatic.com/firebasejs/12.11.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore-compat.js"></script>
+
+<script>
+/* ═══════════════════════════════════════════════
+   الإعدادات — CONFIG
+   ═══════════════════════════════════════════════ */
+// رمز لوحة التحكم — ADMIN PIN (change here)
+const ADMIN_PIN = "7777";
+
+// إعدادات Firebase — استبدل القيم الحقيقية
+const firebaseConfig = {
+  apiKey:            "AIzaSyBJpFTsLf66vGHPohR0ZggQfd7B8LmWVAk",
+  authDomain:        "yara-graduation-rsvp.firebaseapp.com",
+  projectId:         "yara-graduation-rsvp",
+  storageBucket:     "yara-graduation-rsvp.firebasestorage.app",
+  messagingSenderId: "231855243377",
+  appId:             "1:231855243377:web:bba20ae9f6b2afd251dbd0"
+};
+
+let db = null;
+try {
+  firebase.initializeApp(firebaseConfig);
+  db = firebase.firestore();
+} catch(e){ console.warn("Firebase init failed:", e); }
+
+const COLLECTION = "rsvps-yara";
+
+/* ═══════════════════════════════════════════════
+   HERO — letter-by-letter name animation
+   ═══════════════════════════════════════════════ */
+(function(){
+  const name = "Dr. Yara";
+  const el = document.getElementById('heroName');
+  [...name].forEach((ch, i) => {
+    const s = document.createElement('span');
+    s.className = 'ltr-letter';
+    s.textContent = ch === ' ' ? ' ' : ch;
+    s.style.animationDelay = (0.8 + i * 0.04) + 's';
+    el.appendChild(s);
+  });
+})();
+
+/* ═══════════════════════════════════════════════
+   HERO — medical particles
+   ═══════════════════════════════════════════════ */
+(function(){
+  const container = document.getElementById('particles');
+  const total = 25;
+  const cross = '<svg viewBox="0 0 12 12" width="100%" height="100%" fill="currentColor"><rect x="5" y="1" width="2" height="10"/><rect x="1" y="5" width="10" height="2"/></svg>';
+  const stetho = '<svg viewBox="0 0 24 24" width="100%" height="100%" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 3v5a4 4 0 008 0V3M9 17a4 4 0 008 0v-3"/><circle cx="17" cy="11" r="2.5"/></svg>';
+
+  for(let i=0;i<total;i++){
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const type = i % 5 === 0 ? 'stetho' : (i % 2 === 0 ? 'cross' : 'dot');
+    let size, op;
+    if(type === 'stetho' && i < 12){ // limit stethoscopes ~3-4
+      size = 12 + Math.random()*4; op = 0.15;
+      p.innerHTML = stetho;
+    } else if(type === 'cross'){
+      size = 4 + Math.random()*4; op = 0.2 + Math.random()*0.2;
+      p.innerHTML = cross;
+    } else {
+      size = 2 + Math.random()*2; op = 0.15 + Math.random()*0.15;
+      p.style.background = 'var(--gold)'; p.style.borderRadius = '50%';
+    }
+    p.style.width = size + 'px';
+    p.style.height = size + 'px';
+    p.style.left = Math.random()*100 + '%';
+    p.style.setProperty('--p-op', op);
+    p.style.setProperty('--p-drift', (Math.random()*40 - 20) + 'px');
+    p.style.animationDuration = (12 + Math.random()*8) + 's';
+    p.style.animationDelay = (Math.random()*15) + 's';
+    container.appendChild(p);
+  }
+})();
+
+/* ═══════════════════════════════════════════════
+   شريط التقدم — PROGRESS BAR
+   ═══════════════════════════════════════════════ */
+(function(){
+  const bar = document.getElementById('progressBar');
+  let ticking = false;
+  function update(){
+    const h = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = h > 0 ? (window.scrollY / h) * 100 : 0;
+    bar.style.width = pct + '%';
+    ticking = false;
+  }
+  window.addEventListener('scroll', () => {
+    if(!ticking){ requestAnimationFrame(update); ticking = true; }
+  });
+})();
+
+/* ═══════════════════════════════════════════════
+   كشف الأقسام — REVEAL OBSERVER
+   ═══════════════════════════════════════════════ */
+(function(){
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); }
+    });
+  }, { threshold:0.12 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+})();
+
+/* ═══════════════════════════════════════════════
+   كشف الحمد + الرسالة سطراً بسطر
+   ═══════════════════════════════════════════════ */
+(function(){
+  const lineObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        const idx = parseInt(e.target.dataset.idx || 0);
+        setTimeout(() => e.target.classList.add('visible'), idx * 150);
+        lineObs.unobserve(e.target);
+      }
+    });
+  }, { threshold:0.2 });
+
+  document.querySelectorAll('.praise p').forEach((p,i) => { p.dataset.idx = i; lineObs.observe(p); });
+  document.querySelectorAll('.letter-line').forEach((p,i) => { p.dataset.idx = i; lineObs.observe(p); });
+})();
+
+/* ═══════════════════════════════════════════════
+   المعرض — GALLERY BUILD + reveal
+   ═══════════════════════════════════════════════ */
+(function(){
+  const grid = document.getElementById('galleryGrid');
+  for(let i=1;i<=5;i++){
+    const item = document.createElement('div');
+    item.className = 'gallery-item';
+    item.style.transitionDelay = (i*0.08) + 's';
+    item.innerHTML = `
+      <img src="gallery${i}.jpg" alt="د. يارا" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="ph" style="display:none;">+</div>
+      <div class="overlay"><span>د. يارا العزة</span></div>`;
+    grid.appendChild(item);
+  }
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); }
+    });
+  }, { threshold:0.1 });
+  grid.querySelectorAll('.gallery-item').forEach(el => obs.observe(el));
+})();
+
+/* ═══════════════════════════════════════════════
+   تأثير التموج — RIPPLE
+   ═══════════════════════════════════════════════ */
+function attachRipple(btn){
+  btn.addEventListener('click', function(ev){
+    const r = document.createElement('span');
+    r.className = 'ripple';
+    const rect = btn.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    r.style.width = r.style.height = size + 'px';
+    r.style.left = (ev.clientX - rect.left - size/2) + 'px';
+    r.style.top = (ev.clientY - rect.top - size/2) + 'px';
+    btn.appendChild(r);
+    setTimeout(() => r.remove(), 600);
+  });
+}
+document.querySelectorAll('.rippleBtn').forEach(attachRipple);
+
+/* ═══════════════════════════════════════════════
+   نموذج تأكيد الحضور — RSVP FORM
+   ═══════════════════════════════════════════════ */
+(function(){
+  const form = document.getElementById('rsvpForm');
+  const nameInput = document.getElementById('name');
+  const nameError = document.getElementById('nameError');
+  const attendRow = document.getElementById('attendRow');
+  const attendError = document.getElementById('attendError');
+  const guestField = document.getElementById('guestField');
+  const guestRow = document.getElementById('guestRow');
+  const submitBtn = document.getElementById('submitBtn');
+  const thankyou = document.getElementById('thankyou');
+  const tyContent = document.getElementById('tyContent');
+  const resetBtn = document.getElementById('resetBtn');
+
+  let attending = null;
+  let guestCount = null;
+
+  // اختيار الحضور
+  attendRow.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-attend]');
+    if(!btn) return;
+    attending = btn.dataset.attend;
+    attendRow.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    attendError.classList.remove('show');
+    if(attending === 'yes'){ guestField.classList.add('show'); }
+    else { guestField.classList.remove('show'); guestCount = null; guestRow.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('selected')); }
+  });
+
+  // اختيار العدد
+  guestRow.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-guest]');
+    if(!btn) return;
+    guestCount = parseInt(btn.dataset.guest);
+    guestRow.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+  });
+
+  // إزالة الخطأ عند الكتابة
+  nameInput.addEventListener('input', () => {
+    if(nameInput.value.trim()){ nameInput.classList.remove('error'); nameError.classList.remove('show'); }
+  });
+
+  function shake(el){ el.classList.add('shake'); setTimeout(() => el.classList.remove('shake'), 400); }
+
+  // الإرسال
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    let valid = true;
+
+    if(!nameInput.value.trim()){
+      nameInput.classList.add('error'); nameError.classList.add('show'); shake(nameInput); valid = false;
+    }
+    if(!attending){
+      attendError.classList.add('show'); shake(attendRow); valid = false;
+    }
+    if(!valid) return;
+
+    // حفظ
+    submitBtn.classList.add('sweep');
+    submitBtn.textContent = 'جارٍ الإرسال...';
+    submitBtn.disabled = true;
+
+    const data = {
+      id: Date.now(),
+      name: nameInput.value.trim(),
+      attending: attending,
+      guestCount: attending === 'yes' ? (guestCount || 1) : 0,
+      message: document.getElementById('message').value.trim(),
+      date: new Date().toLocaleString('ar-EG')
+    };
+
+    try {
+      if(db){ await db.collection(COLLECTION).add(data); }
+    } catch(err){ console.warn("Firestore save failed:", err); }
+
+    showThankYou(data);
+  });
+
+  function showThankYou(data){
+    form.style.transition = 'opacity .4s';
+    form.style.opacity = '0';
+    setTimeout(() => {
+      form.style.display = 'none';
+      if(data.attending === 'yes'){
+        thankyou.className = 'thankyou ty-yes show';
+        tyContent.innerHTML = `
+          <h3>شكراً لك، ${escapeHtml(data.name)}!</h3>
+          <p class="ty-msg">سيكون حضوركم شرفاً وفرحةً تُضاف إلى فرحتنا</p>
+          <p class="ty-detail">في انتظاركم يوم الخميس 16 يوليو — قاعة ربابة، فندق الشيراتون</p>`;
+      } else {
+        thankyou.className = 'thankyou ty-no show';
+        tyContent.innerHTML = `
+          <h3>شكراً لردك، ${escapeHtml(data.name)}</h3>
+          <p class="ty-msg">سيكون غيابكم محسوساً — نتمنى لكم دوام الصحة والسعادة</p>`;
+      }
+    }, 400);
+  }
+
+  // إعادة التعيين
+  resetBtn.addEventListener('click', () => {
+    thankyou.className = 'thankyou';
+    form.reset();
+    attending = null; guestCount = null;
+    attendRow.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('selected'));
+    guestRow.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('selected'));
+    guestField.classList.remove('show');
+    submitBtn.classList.remove('sweep');
+    submitBtn.textContent = 'إرسال الرد';
+    submitBtn.disabled = false;
+    form.style.display = 'block';
+    setTimeout(() => form.style.opacity = '1', 20);
+  });
+
+  function escapeHtml(s){
+    const d = document.createElement('div'); d.textContent = s; return d.innerHTML;
+  }
+})();
+
+/* ═══════════════════════════════════════════════
+   لوحة التحكم — ADMIN PANEL
+   ═══════════════════════════════════════════════ */
+(function(){
+  const link = document.getElementById('adminLink');
+  const overlay = document.getElementById('adminOverlay');
+  const stats = document.getElementById('adminStats');
+  const list = document.getElementById('respList');
+  const back = document.getElementById('adminBack');
+
+  link.addEventListener('click', async () => {
+    const pin = prompt('أدخل الرمز السري:');
+    if(pin !== ADMIN_PIN){ if(pin !== null) alert('رمز غير صحيح'); return; }
+    overlay.classList.add('show');
+    document.body.style.overflow = 'hidden';
+    await loadResponses();
+  });
+
+  back.addEventListener('click', () => {
+    overlay.classList.remove('show');
+    document.body.style.overflow = '';
+  });
+
+  async function loadResponses(){
+    stats.innerHTML = '';
+    list.innerHTML = '<div class="admin-empty">جارٍ التحميل...</div>';
+    let docs = [];
+    try {
+      if(db){
+        const snap = await db.collection(COLLECTION).get();
+        snap.forEach(d => docs.push(d.data()));
+      }
+    } catch(err){ console.warn("Load failed:", err); }
+
+    docs.sort((a,b) => (b.id||0) - (a.id||0));
+
+    const total = docs.length;
+    const attending = docs.filter(d => d.attending === 'yes');
+    const declined = docs.filter(d => d.attending === 'no');
+    const guestTotal = attending.reduce((s,d) => s + (d.guestCount||0), 0);
+
+    stats.innerHTML = `
+      <div class="stat-box"><div class="num">${total}</div><div class="lbl">إجمالي الردود</div></div>
+      <div class="stat-box"><div class="num">${attending.length}</div><div class="lbl">سيحضرون (+${guestTotal} مرافق)</div></div>
+      <div class="stat-box"><div class="num">${declined.length}</div><div class="lbl">اعتذروا</div></div>`;
+
+    if(!total){ list.innerHTML = '<div class="admin-empty">لا توجد ردود بعد</div>'; return; }
+
+    list.innerHTML = docs.map(d => `
+      <div class="resp-card">
+        <div class="head">
+          <span class="nm">${esc(d.name)}</span>
+          <span class="pill ${d.attending === 'yes' ? 'yes' : 'no'}">${d.attending === 'yes' ? 'سيحضر' : 'اعتذر'}</span>
+        </div>
+        <div class="meta">
+          ${d.attending === 'yes' ? 'عدد المرافقين: ' + (d.guestCount||0) + ' · ' : ''}${esc(d.date||'')}
+        </div>
+        ${d.message ? '<div class="msg">"' + esc(d.message) + '"</div>' : ''}
+      </div>`).join('');
+  }
+
+  function esc(s){ const d = document.createElement('div'); d.textContent = s||''; return d.innerHTML; }
+})();
+</script>
+</body>
+</html>
